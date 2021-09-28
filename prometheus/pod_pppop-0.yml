@@ -1,0 +1,141 @@
+Name:         prometheus-prometheus-prometheus-oper-prometheus-0
+Namespace:    default
+Priority:     0
+Node:         minikube/192.168.64.7
+Start Time:   Sun, 26 Sep 2021 00:42:09 +0800
+Labels:       app=prometheus
+              controller-revision-hash=prometheus-prometheus-prometheus-oper-prometheus-5c9f494879
+              prometheus=prometheus-prometheus-oper-prometheus
+              statefulset.kubernetes.io/pod-name=prometheus-prometheus-prometheus-oper-prometheus-0
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.9
+IPs:
+  IP:           172.17.0.9
+Controlled By:  StatefulSet/prometheus-prometheus-prometheus-oper-prometheus
+Containers:
+  prometheus:
+    Container ID:  docker://c69e56252ba8d4684b5e9ee76def98b43da06c50a75a9eb35f12c3e53d474a58
+    Image:         quay.io/prometheus/prometheus:v2.18.2
+    Image ID:      docker-pullable://quay.io/prometheus/prometheus@sha256:4d3303d1eb424e345cf48969bb7575d4d58472ad783ac41ea07fba92686f7ef5
+    Port:          9090/TCP
+    Host Port:     0/TCP
+    Args:
+      --web.console.templates=/etc/prometheus/consoles
+      --web.console.libraries=/etc/prometheus/console_libraries
+      --config.file=/etc/prometheus/config_out/prometheus.env.yaml
+      --storage.tsdb.path=/prometheus
+      --storage.tsdb.retention.time=10d
+      --web.enable-lifecycle
+      --storage.tsdb.no-lockfile
+      --web.external-url=http://prometheus-prometheus-oper-prometheus.default:9090
+      --web.route-prefix=/
+    State:       Running
+      Started:   Sun, 26 Sep 2021 00:44:43 +0800
+    Last State:  Terminated
+      Reason:    Error
+      Message:   Start listening for connections" address=0.0.0.0:9090
+      Exit Code:    1
+      Started:      Sun, 26 Sep 2021 00:44:19 +0800
+      Finished:     Sun, 26 Sep 2021 00:44:19 +0800
+    Ready:          True
+    Restart Count:  1
+    Liveness:       http-get http://:web/-/healthy delay=0s timeout=3s period=5s #success=1 #failure=6
+    Readiness:      http-get http://:web/-/ready delay=0s timeout=3s period=5s #success=1 #failure=120
+    Environment:    <none>
+    Mounts:
+      /etc/prometheus/certs from tls-assets (ro)
+      /etc/prometheus/config_out from config-out (ro)
+      /etc/prometheus/rules/prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0 from prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0 (rw)
+      /prometheus from prometheus-prometheus-prometheus-oper-prometheus-db (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-bnl4n (ro)
+  prometheus-config-reloader:
+    Container ID:  docker://caa81bda96360245f83c6bf92e1c64a3a61f94a52e8a22cf275e0adb66797eb0
+    Image:         quay.io/coreos/prometheus-config-reloader:v0.38.1
+    Image ID:      docker-pullable://quay.io/coreos/prometheus-config-reloader@sha256:d1cce64093d4a850d28726ec3e48403124808f76567b5bd7b26e4416300996a7
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/prometheus-config-reloader
+    Args:
+      --log-format=logfmt
+      --reload-url=http://127.0.0.1:9090/-/reload
+      --config-file=/etc/prometheus/config/prometheus.yaml.gz
+      --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+    State:          Running
+      Started:      Sun, 26 Sep 2021 00:44:41 +0800
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  25Mi
+    Requests:
+      cpu:     100m
+      memory:  25Mi
+    Environment:
+      POD_NAME:  prometheus-prometheus-prometheus-oper-prometheus-0 (v1:metadata.name)
+    Mounts:
+      /etc/prometheus/config from config (rw)
+      /etc/prometheus/config_out from config-out (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-bnl4n (ro)
+  rules-configmap-reloader:
+    Container ID:  docker://1b048e0a3174b5f8438171afbb2955740dd5bd9e05fffedd88379fe8d71cfff2
+    Image:         docker.io/jimmidyson/configmap-reload:v0.3.0
+    Image ID:      docker-pullable://jimmidyson/configmap-reload@sha256:d107c7a235c266273b1c3502a391fec374430e5625539403d0de797fa9c556a2
+    Port:          <none>
+    Host Port:     <none>
+    Args:
+      --webhook-url=http://127.0.0.1:9090/-/reload
+      --volume-dir=/etc/prometheus/rules/prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0
+    State:          Running
+      Started:      Sun, 26 Sep 2021 00:44:42 +0800
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  25Mi
+    Requests:
+      cpu:        100m
+      memory:     25Mi
+    Environment:  <none>
+    Mounts:
+      /etc/prometheus/rules/prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0 from prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0 (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-bnl4n (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  config:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  prometheus-prometheus-prometheus-oper-prometheus
+    Optional:    false
+  tls-assets:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  prometheus-prometheus-prometheus-oper-prometheus-tls-assets
+    Optional:    false
+  config-out:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      prometheus-prometheus-prometheus-oper-prometheus-rulefiles-0
+    Optional:  false
+  prometheus-prometheus-prometheus-oper-prometheus-db:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  kube-api-access-bnl4n:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>

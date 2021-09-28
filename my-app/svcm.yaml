@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: go-web
+    app.kubernetes.io/instance: go-web-exporter
+    app.kubernetes.io/name: prometheus-go-web-exporter
+    release: prometheus
+  name: go-web-exporter-prometheus-go-web-exporter
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+    scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app: go-web

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-web
+  labels:
+    app: go-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-web
+  template:
+    metadata:
+      labels:
+        app: go-web
+    spec:
+      containers:
+        - name: go-web-container
+          image: frozenlight/go-web
+          ports:
+            - name: web
+              containerPort: 80
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-web-svc
+  labels:
+    app: go-web
+spec:
+  selector:
+    app: go-web
+  type: ClusterIP
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 80
