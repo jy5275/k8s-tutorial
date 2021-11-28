@@ -1,0 +1,59 @@
+version: '2'
+services:
+  broker1: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: broker1
+    ports:
+      - "19011:22"
+    restart: always
+  broker2: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: broker2
+    depends_on:
+      - broker1
+    ports:
+      - "19012:22"  
+    restart: always
+  broker3: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: broker3
+    depends_on:
+      - broker2
+    ports:
+      - "19013:22"
+    restart: always
+  producer: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: producer
+    links: 
+      - broker1:hostb1
+      - broker2:hostb2
+      - broker3:hostb3
+    ports:
+      - "19014:22"
+    restart: always
+  consumer1: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: consumer1
+    depends_on:
+      - producer
+    links: 
+      - broker1:hostb1
+      - broker2:hostb2
+      - broker3:hostb3
+    ports:
+      - "19015:22"
+    restart: always
+  consumer2: 
+    image: bolingcavalry/ssh-kafka292081-zk346:0.0.1
+    container_name: consumer2
+    depends_on:
+      - consumer1
+    ports:
+      - "19016:22"
+    links: 
+      - broker1:hostb1
+      - broker2:hostb2
+      - broker3:hostb3
+    restart: always  
+

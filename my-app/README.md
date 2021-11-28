@@ -9,7 +9,7 @@ Steps:
 
 3. Login dockerhub: `docker login`
 
-4. Push image to dockerhub `docker push frozenlight/go-web`. Might take several minutes. Check at hub.docker.com
+4. Push image to dockerhub `docker push frozenlight/go-web`. Might take several minutes. Check at https://hub.docker.com
 
 5. Initiate minikube cluster `minikube start --driver=docker`
 

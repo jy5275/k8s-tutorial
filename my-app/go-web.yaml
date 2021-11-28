@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: go-web-container
-          image: frozenlight/go-web
+          image: frozenlight/go-web:latest  # Label is not sure
           ports:
             - name: web
               containerPort: 80
